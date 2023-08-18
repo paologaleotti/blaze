@@ -1,2 +1,2 @@
-# go-backend-template
-Minimalist Go template using microservices in a monorepo
+# 🔥blaze
+Minimalist Go template to build fast and typesafe backend applications
