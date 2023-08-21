@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "explorer.compactFolders": false,
+    "conventionalCommits.scopes": [
+        "core"
+    ]
+}
