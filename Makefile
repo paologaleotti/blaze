@@ -6,7 +6,7 @@ build:
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "building $$(basename $$dir)..."; \
-		go build -v -o bin/$$(basename $$dir) $$dir/main.go; \
+		go build -o bin/$$(basename $$dir) $$dir/main.go; \
 	done
 
 # Clean build artifacts

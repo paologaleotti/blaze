@@ -1,7 +1,10 @@
 {
-    "editor.formatOnSave": true,
-    "explorer.compactFolders": false,
-    "conventionalCommits.scopes": [
-        "core"
-    ]
+	"editor.formatOnSave": true,
+	"explorer.compactFolders": false,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
+	"[yaml]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	}
 }

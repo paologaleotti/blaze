@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Todo API
+  version: 1.0.0
+
+tags:
+  - name: Todo
+    description: todo related operations
+paths:
+  /todos:
+    get:
+      tags:
+        - Todo
+      summary: Get all todos
+      operationId: getTodos
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+    post:
+      tags:
+        - Todo
+      summary: Create a todo
+      operationId: createTodo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTodo"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+  /todos/{id}:
+    get:
+      tags:
+        - Todo
+      summary: Get a todo
+      operationId: getTodo
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "404":
+          description: Not Found
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    NewTodo:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+    Todo:
+      type: object
+      required:
+        - id
+        - title
+        - completed
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        completed:
+          type: boolean
