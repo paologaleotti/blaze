@@ -1,7 +1,7 @@
 package main
 
 import (
-	todoservice "blaze/internal/todo-service"
+	"blaze/internal/todoservice"
 	"blaze/pkg/httpcore"
 	"log"
 	"net/http"
@@ -14,5 +14,5 @@ func main() {
 	todoservice.ApplyRoutes(router, controller)
 
 	log.Print("Server started")
-	http.ListenAndServe(":3000", router)
+	http.ListenAndServe("0.0.0.0:3000", router)
 }

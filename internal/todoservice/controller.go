@@ -1,6 +1,7 @@
 package todoservice
 
 import (
+	"blaze/pkg/httpcore"
 	"blaze/pkg/models"
 	"net/http"
 
@@ -34,14 +35,12 @@ func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.Status(r, http.StatusNotFound)
-	render.PlainText(w, r, "Todo not found")
+	render.JSON(w, r, httpcore.ErrNotFound)
 }
 
 func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
-	var newTodo models.NewTodo
-	if err := render.DecodeJSON(r.Body, &newTodo); err != nil {
-		render.Status(r, http.StatusBadRequest)
-		render.PlainText(w, r, "Failed to decode request body")
+	newTodo, err := httpcore.DecodeBody[models.NewTodo](w, r)
+	if err != nil {
 		return
 	}
 
