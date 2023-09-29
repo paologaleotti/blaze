@@ -7,6 +7,7 @@ Simple and minimal Go template for building fast and type-safe backend applicati
 ## Features
 - Minimal and low overhead
 - Simple and conventional structure
+- API-first approach
 - Mainly based on `std` library
 - HTTP utilities and error handling
 - Fast and simple build tool (single `Makefile`)
@@ -16,3 +17,4 @@ Simple and minimal Go template for building fast and type-safe backend applicati
 - **chi/middleware**: middleware and hooks
 - **chi/render**: request/reply payload utility
 - **oapi-codegen**: OpenAPI schema type generator
+- **zap**: Structured logging

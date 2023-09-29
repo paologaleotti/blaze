@@ -6,6 +6,7 @@
 - [x] Build tool/makefile
 - [x] OpenAPI schema types generation
 - [x] Basic HTTP error handling
+- [x] Structured logging
 - [ ] Request body validation (?)
 - [ ] Typed request and reply (?)
 - [ ] Env variables validation
