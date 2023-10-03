@@ -4,6 +4,8 @@
 
 Simple and minimal Go template for building fast and type-safe backend applications
 
+> ⚠️ WIP: Head to the [TODO.md](TODO.md) file to follow the development.
+
 ## Features
 - Minimal and low overhead
 - Simple and conventional structure
