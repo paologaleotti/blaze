@@ -10,6 +10,7 @@ import (
 func main() {
 	util.InitLogger()
 	router := httpcore.NewRouter()
+	//env := todoservice.InitEnv() // get typed environment
 	controller := todoservice.NewTodoController()
 
 	todoservice.ApplyRoutes(router, controller)

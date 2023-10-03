@@ -9,6 +9,6 @@
 - [x] Structured logging
 - [ ] Request body validation (?)
 - [ ] Typed request and reply (?)
-- [ ] Env variables validation
+- [x] Env variables validation
 - [ ] Custom middleware utils
 - [ ] Project scaffolding CLI (?)
