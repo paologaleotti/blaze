@@ -8,6 +8,13 @@ type ApiError struct {
 	Status  int    `json:"status"`
 }
 
+func (e ApiError) Msg(err error) ApiError {
+	if err != nil {
+		e.Message += ": " + err.Error()
+	}
+	return e
+}
+
 var (
 	ErrBadRequest = ApiError{
 		Title:   "BAD_REQUEST",
