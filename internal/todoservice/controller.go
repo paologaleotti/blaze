@@ -28,7 +28,7 @@ func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 
 	for _, todo := range tc.db {
-		if todo.Id.String() == id {
+		if todo.Id == id {
 			render.JSON(w, r, todo)
 			return
 		}
@@ -45,7 +45,7 @@ func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	todo := &models.Todo{
-		Id:        uuid.New(),
+		Id:        uuid.New().String(),
 		Title:     newTodo.Title,
 		Completed: false,
 	}

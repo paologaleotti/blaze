@@ -6,5 +6,6 @@
 	},
 	"[yaml]": {
 		"editor.defaultFormatter": "redhat.vscode-yaml"
-	}
+	},
+	"go.useLanguageServer": true,
 }
