@@ -7,7 +7,7 @@ tags:
   - name: Todo
     description: todo related operations
 paths:
-  /todos:
+  /api/todos:
     get:
       tags:
         - Todo
@@ -40,7 +40,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Todo"
-  /todos/{id}:
+  /api/todos/{id}:
     get:
       tags:
         - Todo

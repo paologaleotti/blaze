@@ -24,3 +24,7 @@ bin
 
 # Generated code
 generated*
+
+# npm
+node_modules
+dist

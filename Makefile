@@ -1,13 +1,14 @@
 CMD_DIRS := $(wildcard cmd/*)
 OPENAPI_DIR := api/openapi.yaml
+STATIC_DIR := bin/static
+CLIENT_DIST_DIR := web/client/dist
 
 # Define color codes for better output visibility
 ORANGE := \033[0;33m
 NC := \033[0m  # No Color
 
 # Build all entrypoints and place artifacts in /bin
-
-build: startlog tidy
+build: startlog build-client tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building ${ORANGE}$$(basename $$dir)${NC}"; \
@@ -16,8 +17,17 @@ build: startlog tidy
 	@echo "${ORANGE}[blaze]${NC} Done!"
 
 
+# Build client inside web dir using npm and place artifacts in /bin/static
+build-client:
+	@echo "${ORANGE}[blaze]${NC} Building client..."
+	@cd web/client && npm run build
+	@rm -rf $(STATIC_DIR)
+	@mkdir -p $(STATIC_DIR)
+	@mv -f $(CLIENT_DIST_DIR)/* $(STATIC_DIR)
+
 # Clean build artifacts
 clean:
+	rm -rf $(CLIENT_DIST_DIR)
 	rm -rf bin
 
 generate:
