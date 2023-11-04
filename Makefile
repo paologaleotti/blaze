@@ -16,7 +16,7 @@ build: startlog tidy
 	@echo "${ORANGE}[blaze]${NC} Done!"
 
 # Build all Lambda entrypoints and place artifacts in /bin
-build-lambda: startlog generate tidy
+build-lambda: startlog tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building Lambda for ${ORANGE}$$(basename $$dir)${NC}"; \
