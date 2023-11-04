@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "golang.go",
+        "redhat.vscode-yaml",
+        "vivaxy.vscode-conventional-commits",
+        "liuchao.go-struct-tag"
+    ]
+}
