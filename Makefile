@@ -11,7 +11,7 @@ build: startlog tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building ${ORANGE}$$(basename $$dir)${NC}"; \
-		go build -o bin/$$(basename $$dir) $$dir/main.go; \
+		go build -o bin/$$(basename $$dir)/main $$dir/main.go; \
 	done
 	@echo "${ORANGE}[blaze]${NC} Done!"
 
@@ -20,7 +20,7 @@ build-lambda: startlog tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building Lambda for ${ORANGE}$$(basename $$dir)${NC}"; \
-		go build -o bin/$$(basename $$dir)_lambda $$dir/lambda/main.go; \
+		GOOS=linux GOARCH=arm64 go build -tags lambda.norpc -o bin/$$(basename $$dir)/bootstrap $$dir/lambda/main.go; \
 	done
 	@echo "${ORANGE}[blaze]${NC} Done!"
 

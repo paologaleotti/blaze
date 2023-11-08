@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.x
+    commands:
+      - sam validate -t deploy/aws/template.yaml
+  build:
+    commands:
+      - make
+  post_build:
+    commands:
+      - sam deploy --stack-name $STACK_NAME --region $AWS_REGION --resolve-s3 --capabilities CAPABILITY_IAM
