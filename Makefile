@@ -12,10 +12,18 @@ build: startlog build-client tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building ${ORANGE}$$(basename $$dir)${NC}"; \
-		go build -o bin/$$(basename $$dir) $$dir/main.go; \
+		go build -o bin/$$(basename $$dir)/main $$dir/main.go; \
 	done
 	@echo "${ORANGE}[blaze]${NC} Done!"
 
+# Build all Lambda entrypoints and place artifacts in /bin
+build-lambda: startlog tidy
+	@mkdir -p bin
+	@for dir in $(CMD_DIRS); do \
+		echo "${ORANGE}[blaze]${NC} Building Lambda for ${ORANGE}$$(basename $$dir)${NC}"; \
+		GOOS=linux GOARCH=arm64 go build -tags lambda.norpc -o bin/$$(basename $$dir)/bootstrap $$dir/lambda/main.go; \
+	done
+	@echo "${ORANGE}[blaze]${NC} Done!"
 
 # Build client inside web dir using npm and place artifacts in /bin/static
 build-client:

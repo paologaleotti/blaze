@@ -8,4 +8,7 @@
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"go.useLanguageServer": true,
+	"editor.quickSuggestions": {
+		"strings": true
+	}
 }

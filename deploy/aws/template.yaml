@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Go Lambda with API Gateway using SAM
+
+Resources:
+  TodoLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: provided.al2
+      CodeUri: ../../bin/todoservice
+      Handler: bootstrap
+      Architectures:
+        - arm64
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        ProxyApiRoot:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+        ProxyApiGreedy:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
