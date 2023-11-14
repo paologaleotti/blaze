@@ -18,8 +18,9 @@ var validate = validator.New(validator.WithRequiredStructEnabled())
 // It renders the JSON response to the given http.ResponseWriter and http.Request.
 func DecodeBody[T any](w http.ResponseWriter, r *http.Request) (T, error) {
 	var payload T
-	render.DecodeJSON(r.Body, &payload)
-	err := validate.Struct(payload)
+	errDecode := render.DecodeJSON(r.Body, &payload)
+	errValidate := validate.Struct(payload)
+	err := errors.Join(errDecode, errValidate)
 
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)

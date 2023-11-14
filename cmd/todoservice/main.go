@@ -2,19 +2,17 @@ package main
 
 import (
 	"blaze/internal/todoservice"
-	"blaze/pkg/httpcore"
 	"blaze/pkg/util"
 	"net/http"
 )
 
 func main() {
-	util.InitLogger()
-	router := httpcore.NewRouter()
-	//env := todoservice.InitEnv() // get typed environment
-	controller := todoservice.NewTodoController()
-
-	todoservice.ApplyRoutes(router, controller)
+	router := todoservice.InitService()
 
 	util.Log.Info("Server started at http://localhost:3000")
-	http.ListenAndServe("0.0.0.0:3000", router)
+	err := http.ListenAndServe("0.0.0.0:3000", router)
+	if err != nil {
+		util.Log.Fatalf("Could not start http server: %v\n", err)
+	}
+
 }
