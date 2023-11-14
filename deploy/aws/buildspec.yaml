@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.21
+    commands:
+      - sam validate -t deploy/aws/template.yaml
+  build:
+    commands:
+      - GOPATH=$HOME/gocache make build-lambda
+  post_build:
+    commands:
+      - sam deploy -t deploy/aws/template.yaml --stack-name $PROJECT_NAME --region $AWS_REGION --resolve-s3 --capabilities CAPABILITY_IAM
