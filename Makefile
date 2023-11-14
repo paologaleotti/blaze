@@ -11,7 +11,7 @@ build: startlog tidy
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building ${ORANGE}$$(basename $$dir)${NC}"; \
-		go build -o bin/$$(basename $$dir) $$dir/main.go; \
+		go build -o bin/$$(basename $$dir)/main $$dir/main.go; \
 	done
 	@echo "${ORANGE}[blaze]${NC} Done!"
 
@@ -30,5 +30,9 @@ startlog:
 tidy:
 	@echo "${ORANGE}[blaze]${NC} Organizing modules..."
 	@go mod tidy
+
+lint:
+	@echo "${ORANGE}[blaze]${NC} Linting..."
+	@golangci-lint run
 
 .PHONY: build clean generate
