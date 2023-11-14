@@ -1,0 +1,39 @@
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - bidichk
+    - exhaustive
+    - forcetypeassert
+    - gocheckcompilerdirectives
+    - goconst
+    - gofmt
+    - gosec
+    - nakedret
+    - nilerr
+    - nilnil
+    - perfsprint
+    - prealloc
+    - makezero
+    - protogetter
+    - reassign
+    - rowserrcheck
+    - tagliatelle
+linters-settings:
+  exhaustive:
+    default-signifies-exhaustive: true
+  nakedret:
+    max-func-lines: 1
+  gosec:
+    excludes:
+      - G102
+      - G114
+run:
+  skip-dirs:
+    - bin
+    - tools

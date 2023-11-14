@@ -39,4 +39,8 @@ tidy:
 	@echo "${ORANGE}[blaze]${NC} Organizing modules..."
 	@go mod tidy
 
+lint:
+	@echo "${ORANGE}[blaze]${NC} Linting..."
+	@golangci-lint run
+
 .PHONY: build clean generate
