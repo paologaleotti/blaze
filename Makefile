@@ -1,6 +1,6 @@
 CMD_DIRS := $(wildcard cmd/*)
 OPENAPI_DIR := api/openapi.yaml
-STATIC_DIR := bin/static
+STATIC_DIR := bin/todoservice/static
 CLIENT_DIST_DIR := web/client/dist
 
 # Define color codes for better output visibility
