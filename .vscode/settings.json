@@ -10,5 +10,6 @@
 	"go.useLanguageServer": true,
 	"editor.quickSuggestions": {
 		"strings": true
-	}
+	},
+	"conventionalCommits.scopes": ["http"]
 }

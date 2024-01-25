@@ -1,4 +1,4 @@
-package todoservice
+package api
 
 import "blaze/pkg/util"
 
