@@ -8,4 +8,5 @@
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"go.useLanguageServer": true,
+	"conventionalCommits.scopes": ["http"]
 }

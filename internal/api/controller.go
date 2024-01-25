@@ -1,4 +1,4 @@
-package todoservice
+package api
 
 import (
 	"blaze/pkg/httpcore"
@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/render"
 	"github.com/google/uuid"
 )
 
@@ -20,28 +19,26 @@ func NewTodoController() *TodoController {
 	}
 }
 
-func (tc *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) {
-	render.JSON(w, r, tc.db)
+func (tc *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) (any, int) {
+	return tc.db, http.StatusOK
 }
 
-func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) {
+func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) (any, int) {
 	id := chi.URLParam(r, "id")
 
 	for _, todo := range tc.db {
 		if todo.Id == id {
-			render.JSON(w, r, todo)
-			return
+			return todo, http.StatusOK
 		}
 	}
 
-	render.Status(r, http.StatusNotFound)
-	render.JSON(w, r, httpcore.ErrNotFound)
+	return httpcore.ErrNotFound, http.StatusNotFound
 }
 
-func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
+func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) (any, int) {
 	newTodo, err := httpcore.DecodeBody[models.NewTodo](w, r)
 	if err != nil {
-		return
+		return httpcore.ErrBadRequest.Msg(err), http.StatusBadRequest
 	}
 
 	todo := &models.Todo{
@@ -52,6 +49,5 @@ func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) {
 
 	tc.db = append(tc.db, todo)
 
-	render.Status(r, http.StatusCreated)
-	render.JSON(w, r, todo)
+	return todo, http.StatusCreated
 }
