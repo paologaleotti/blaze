@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: provided.al2
-      CodeUri: ../../bin/todoservice
+      CodeUri: ../../bin/api
       Handler: bootstrap
       Architectures:
         - arm64
