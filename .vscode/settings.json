@@ -2,7 +2,7 @@
 	"editor.formatOnSave": true,
 	"explorer.compactFolders": false,
 	"editor.codeActionsOnSave": {
-		"source.organizeImports": true
+		"source.organizeImports": "always"
 	},
 	"[yaml]": {
 		"editor.defaultFormatter": "redhat.vscode-yaml"
@@ -10,5 +10,6 @@
 	"go.useLanguageServer": true,
 	"editor.quickSuggestions": {
 		"strings": true
-	}
+	},
+	"conventionalCommits.scopes": ["http"]
 }

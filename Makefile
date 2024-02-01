@@ -8,7 +8,7 @@ ORANGE := \033[0;33m
 NC := \033[0m  # No Color
 
 # Build all entrypoints and place artifacts in /bin
-build: startlog build-client tidy
+build: startlog build-client tidy lint-if-env
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
 		echo "${ORANGE}[blaze]${NC} Building ${ORANGE}$$(basename $$dir)${NC}"; \
@@ -52,5 +52,12 @@ tidy:
 lint:
 	@echo "${ORANGE}[blaze]${NC} Linting..."
 	@golangci-lint run
+
+
+lint-if-env:
+	@if [ -n "$$BLAZE_ALWAYS_LINT" ]; then \
+		echo "${ORANGE}[blaze]${NC} Linting..."; \
+		golangci-lint run; \
+	fi
 
 .PHONY: build clean generate

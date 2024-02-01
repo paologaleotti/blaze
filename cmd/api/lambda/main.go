@@ -1,7 +1,7 @@
 package main
 
 import (
-	"blaze/internal/todoservice"
+	"blaze/internal/api"
 	"blaze/pkg/util"
 
 	"github.com/aws/aws-lambda-go/lambda"
@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	router := todoservice.InitService()
+	router := api.InitService()
 
 	util.Log.Info("Server started at http://localhost:3000")
 	lambda.Start(httpadapter.New(router).ProxyWithContext)

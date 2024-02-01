@@ -1,4 +1,4 @@
-package todoservice
+package api
 
 import (
 	"blaze/pkg/httpcore"
@@ -18,9 +18,9 @@ func ApplyRoutes(router chi.Router, controller *TodoController) {
 		filepath.Join(getStaticDirPath(), "index.html"),
 	))
 
-	router.Get("/api/todos", controller.GetTodos)
-	router.Get("/api/todos/{id}", controller.GetTodo)
-	router.Post("/api/todos", controller.CreateTodo)
+	router.Get("/api/todos", httpcore.Handle(controller.GetTodos))
+	router.Get("/api/todos/{id}", httpcore.Handle(controller.GetTodo))
+	router.Post("/api/todos", httpcore.Handle(controller.CreateTodo))
 }
 
 func getStaticDirPath() string {

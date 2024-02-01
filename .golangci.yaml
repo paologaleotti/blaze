@@ -33,6 +33,12 @@ linters-settings:
     excludes:
       - G102
       - G114
+  nilnil:
+    checked-types:
+      - func
+      - iface
+      - map
+      - chan
 run:
   skip-dirs:
     - bin
