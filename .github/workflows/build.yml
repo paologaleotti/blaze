@@ -26,4 +26,8 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: "[blaze] Build ${{ job.status }}! See details: ${{ github.workflow_url }}"
+          message: |
+            "[blaze🔥] Build ${{ job.status }}! 
+            Commit: ${{ github.event.commits[0].message }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
