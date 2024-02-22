@@ -10,8 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          clean: true
       - name: Setup Go environment
         uses: actions/setup-go@v3
         with:
@@ -22,3 +20,11 @@ jobs:
 
       - name: Build the application
         run: make build
+
+      - name: Send Telegram notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: "[blaze] Build {{ job.status }}! See details: ${{ github.workflow_url }}"
+          job_status: ${{ job.status }}
