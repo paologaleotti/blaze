@@ -19,26 +19,26 @@ func NewTodoController() *TodoController {
 	}
 }
 
-func (tc *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) (any, int) {
-	return tc.db, http.StatusOK
+func (tc *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) httpcore.Reply[[]*models.Todo] {
+	return httpcore.ReplyData(tc.db, http.StatusOK)
 }
 
-func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) (any, int) {
+func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) httpcore.Reply[models.Todo] {
 	id := chi.URLParam(r, "id")
 
 	for _, todo := range tc.db {
 		if todo.Id == id {
-			return todo, http.StatusOK
+			return httpcore.ReplyData(*todo, http.StatusOK)
 		}
 	}
 
-	return httpcore.ErrNotFound, http.StatusNotFound
+	return httpcore.ReplyErr[models.Todo](httpcore.ErrNotFound)
 }
 
-func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) (any, int) {
+func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) httpcore.Reply[models.Todo] {
 	newTodo, err := httpcore.DecodeBody[models.NewTodo](w, r)
 	if err != nil {
-		return httpcore.ErrBadRequest.Msg(err), http.StatusBadRequest
+		return httpcore.ReplyErr[models.Todo](httpcore.ErrBadRequest.Msg(err))
 	}
 
 	todo := &models.Todo{
@@ -49,5 +49,5 @@ func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) (an
 
 	tc.db = append(tc.db, todo)
 
-	return todo, http.StatusCreated
+	return httpcore.ReplyData(*todo, http.StatusCreated)
 }
