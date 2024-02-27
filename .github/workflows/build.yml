@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
@@ -26,8 +29,8 @@ jobs:
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
+          to: ${{ env.TELEGRAM_TO }}
+          token: ${{ env.TELEGRAM_TOKEN }}
           message: |
             [blaze🔥] Build ${{ job.status }}! 
             Commit: ${{ github.event.commits[0].message }}
