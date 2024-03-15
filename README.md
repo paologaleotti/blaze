@@ -1,13 +1,13 @@
 # blaze🔥
 
-![logo](https://media.discordapp.net/attachments/828988349225631787/1142216448681447465/Logo_wide_6.png)
-
 Simple and minimal Go template for building fast and type-safe backend applications
 
-> ⚠️ WIP: Head to the [TODO.md](TODO.md) file to follow the development.
+> [!IMPORTANT]
+> While blaze is already used and working flawlessly in production, it's still evolving and may have breaking changes in the future.
 
 ## Features
 - Minimal and low overhead
+- Production ready
 - Simple and conventional structure
 - API-first friendly
 - Mainly based on `std` library
