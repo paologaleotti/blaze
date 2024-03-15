@@ -1,4 +1,6 @@
-# blaze🔥
+# blaze
+
+![logo](https://github.com/paologaleotti/blaze/assets/45665769/a0c691df-b76b-4a4a-ac44-c622dd458352)
 
 Simple and minimal Go template for building fast and type-safe backend applications
 
