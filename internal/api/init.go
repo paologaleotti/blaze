@@ -10,7 +10,7 @@ import (
 func InitService() chi.Router {
 	util.InitLogger()
 	router := httpcore.NewRouter()
-	//env := api.InitEnv() // get typed environment
+	// env := api.InitEnv() // get typed environment
 	controller := NewTodoController()
 	ApplyRoutes(router, controller)
 
