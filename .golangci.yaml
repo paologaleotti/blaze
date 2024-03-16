@@ -24,6 +24,13 @@ linters:
     - reassign
     - rowserrcheck
     - tagliatelle
+    - bodyclose
+    - zerologlint
+    - errname
+    - unconvert
+    - usestdlibvars
+    - revive
+    - protogetter
 linters-settings:
   exhaustive:
     default-signifies-exhaustive: true
@@ -39,6 +46,19 @@ linters-settings:
       - iface
       - map
       - chan
+  revive:
+    enable-all-rules: true
+    rules:
+      - name: var-naming
+        disabled: true
+      - name: empty-lines
+        disabled: true
+      - name: line-length-limit
+        disabled: true
+      - name: unused-parameter
+        disabled: true
+      - name: add-constant
+        disabled: true
 run:
   skip-dirs:
     - bin

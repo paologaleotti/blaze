@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-type Handler func(w http.ResponseWriter, r *http.Request) (interface{}, int)
+type Handler func(w http.ResponseWriter, r *http.Request) (any, int)
 
 // Handle wraps a Handler and takes care of rendering to JSON the response
 func Handle(handler Handler) http.HandlerFunc {
