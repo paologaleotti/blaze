@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/rs/zerolog"
@@ -14,6 +15,10 @@ func InitLogger() {
 
 	} else {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+		out := zerolog.ConsoleWriter{Out: os.Stdout}
+		out.FormatMessage = func(i interface{}) string {
+			return fmt.Sprintf("%+v", i)
+		}
+		log.Logger = log.Output(out)
 	}
 }
