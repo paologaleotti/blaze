@@ -18,6 +18,5 @@ Simple and minimal Go template for building fast and type-safe backend applicati
 ## Stack
 - **chi**: HTTP router (std net/http compatible)
 - **chi/middleware**: middleware and hooks
-- **chi/render**: request/reply payload utility
 - **validator/v10**: request body struct validation
-- **zap**: Structured logging
+- **zerolog**: Structured logging
