@@ -11,14 +11,12 @@ Simple and minimal Go template for building fast and type-safe backend applicati
 - Minimal and low overhead
 - Production ready
 - Simple and conventional structure
-- API-first friendly
-- Mainly based on `std` library
+- Fully compatible with standard [net/http](https://pkg.go.dev/net/http)
 - HTTP utilities and error handling
-- Fast and simple build tool (single `Makefile`)
+- Strict linting with [golangci-lint](https://golangci-lint.run/)
 
 ## Stack
 - **chi**: HTTP router (std net/http compatible)
 - **chi/middleware**: middleware and hooks
-- **chi/render**: request/reply payload utility
 - **validator/v10**: request body struct validation
-- **zap**: Structured logging
+- **zerolog**: Structured logging

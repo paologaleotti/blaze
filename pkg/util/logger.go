@@ -1,33 +1,24 @@
 package util
 
 import (
+	"fmt"
 	"os"
 
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
-var Log zap.SugaredLogger
-var RichLog zap.Logger
-
 func InitLogger() {
-	var cfg zap.Config
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	if os.Getenv("ENVIRONMENT") == "prod" {
-		cfg = zap.NewProductionConfig()
-		cfg.Level.SetLevel(zap.InfoLevel)
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	} else {
-		cfg = zap.NewDevelopmentConfig()
-		cfg.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
-		cfg.DisableCaller = true
-		cfg.Level.SetLevel(zap.DebugLevel)
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+		out := zerolog.ConsoleWriter{Out: os.Stdout}
+		out.FormatMessage = func(i any) string {
+			return fmt.Sprintf("%+v", i)
+		}
+		log.Logger = log.Output(out)
 	}
-
-	logger, err := cfg.Build()
-	if err != nil {
-		panic(err)
-	}
-
-	Log = *logger.Sugar()
-	RichLog = *logger
 }

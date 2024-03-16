@@ -8,8 +8,11 @@
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"go.useLanguageServer": true,
-	"editor.quickSuggestions": {
-		"strings": true
-	},
-	"conventionalCommits.scopes": ["http"]
+	"go.lintTool": "golangci-lint",
+	"go.lintFlags": [
+		"--fast"
+	],
+	"conventionalCommits.scopes": [
+		"http"
+	]
 }
