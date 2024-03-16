@@ -16,7 +16,7 @@ func InitLogger() {
 	} else {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 		out := zerolog.ConsoleWriter{Out: os.Stdout}
-		out.FormatMessage = func(i interface{}) string {
+		out.FormatMessage = func(i any) string {
 			return fmt.Sprintf("%+v", i)
 		}
 		log.Logger = log.Output(out)
