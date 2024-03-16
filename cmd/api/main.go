@@ -4,15 +4,18 @@ import (
 	"blaze/internal/api"
 	"blaze/pkg/util"
 	"net/http"
+
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
 	router := api.InitService()
+	util.InitLogger()
 
-	util.Log.Info("Server started at http://localhost:3000")
+	log.Info().Msg("Server started at http://localhost:3000")
 	err := http.ListenAndServe("0.0.0.0:3000", router)
 	if err != nil {
-		util.Log.Fatalf("Could not start http server: %v\n", err)
+		log.Fatal().Msgf("Could not start http server: %v\n", err)
 	}
 
 }
