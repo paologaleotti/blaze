@@ -11,6 +11,6 @@ import (
 func main() {
 	router := api.InitService()
 
-	log.Info().Msg("Server started at http://localhost:3000")
+	log.Info().Msg("Server started on AWS Lambda")
 	lambda.Start(httpadapter.New(router).ProxyWithContext)
 }
