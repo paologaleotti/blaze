@@ -30,7 +30,6 @@ linters:
     - unconvert
     - usestdlibvars
     - revive
-    - protogetter
 linters-settings:
   exhaustive:
     default-signifies-exhaustive: true
