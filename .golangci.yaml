@@ -47,19 +47,45 @@ linters-settings:
       - map
       - chan
   revive:
-    enable-all-rules: true
+    enable-all-rules: false
     rules:
-      - name: var-naming
-        disabled: true
-      - name: empty-lines
-        disabled: true
-      - name: line-length-limit
-        disabled: true
-      - name: unused-parameter
-        disabled: true
-      - name: add-constant
-        disabled: true
-run:
-  skip-dirs:
-    - bin
-    - tools
+      - name: time-naming
+        disabled: false
+      - name: errorf
+        disabled: false
+      - name: context-as-argument
+        disabled: false
+      - name: error-return
+        disabled: false
+      - name: error-strings
+        disabled: false
+      - name: error-naming
+        disabled: false
+      - name: if-return
+        disabled: false
+      - name: range
+        disabled: false
+      - name: confusing-naming
+        disabled: false
+      - name: modifies-parameter
+        disabled: false
+      - name: deep-exit
+        disabled: false
+      - name: unreachable-code
+        disabled: false
+      - name: unnecessary-stmt
+        disabled: false
+      - name: struct-tag
+        disabled: false
+      - name: modifies-value-receiver
+        disabled: false
+      - name: waitgroup-by-value
+        disabled: false
+      - name: atomic
+        disabled: false
+      - name: defer
+        disabled: false
+      - name: use-any
+        disabled: false
+      - name: datarace
+        disabled: false
