@@ -3,11 +3,10 @@ package api
 import (
 	"blaze/pkg/httpcore"
 	"blaze/pkg/util"
-
-	"github.com/go-chi/chi/v5"
+	"net/http"
 )
 
-func InitService() chi.Router {
+func InitService() http.Handler {
 	util.InitLogger()
 
 	router := httpcore.NewRouter()
