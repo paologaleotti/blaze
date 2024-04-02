@@ -1,4 +1,4 @@
-name: Blaze lint and build
+name: Build and lint
 
 on:
   push:
