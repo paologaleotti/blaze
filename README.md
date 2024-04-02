@@ -7,6 +7,8 @@ Simple and minimal Go template for building fast and type-safe backend applicati
 > [!IMPORTANT]
 > While blaze is already used and working flawlessly in production, it's still evolving and may have breaking changes in the future.
 
+You can find the full documentation with examples [here](https://github.com/paologaleotti/blaze/wiki).
+
 ## Features
 - Minimal and low overhead
 - Production ready
