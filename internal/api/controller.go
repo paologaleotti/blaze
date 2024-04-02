@@ -5,7 +5,6 @@ import (
 	"blaze/pkg/models"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 )
 
@@ -24,7 +23,7 @@ func (tc *TodoController) GetTodos(w http.ResponseWriter, r *http.Request) (any,
 }
 
 func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) (any, int) {
-	id := chi.URLParam(r, "id")
+	id := r.PathValue("id")
 
 	for _, todo := range tc.db {
 		if todo.Id == id {

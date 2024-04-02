@@ -10,14 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Go environment
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: 1.22
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+          skip-pkg-cache: true
 
       - name: Build the application
         run: make build
