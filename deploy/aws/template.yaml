@@ -6,7 +6,7 @@ Resources:
   TodoLambda:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: provided.al2
+      Runtime: provided.al2023
       CodeUri: ../../bin/api
       Handler: bootstrap
       Architectures:
