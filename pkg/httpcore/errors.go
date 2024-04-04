@@ -9,11 +9,14 @@ type ApiError struct {
 }
 
 func (e ApiError) Msg(err error) ApiError {
-	apiErr := e
-	if err != nil {
-		apiErr.Message += ": " + err.Error()
+	if err == nil {
+		return e
 	}
-	return apiErr
+	return ApiError{
+		Title:   e.Title,
+		Message: e.Message + ": " + err.Error(),
+		Status:  e.Status,
+	}
 }
 
 var (
