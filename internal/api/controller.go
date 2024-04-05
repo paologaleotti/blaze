@@ -31,13 +31,13 @@ func (tc *TodoController) GetTodo(w http.ResponseWriter, r *http.Request) (any, 
 		}
 	}
 
-	return httpcore.ErrNotFound, http.StatusNotFound
+	return httpcore.ErrNotFound.Msg("todo not found"), http.StatusNotFound
 }
 
 func (tc *TodoController) CreateTodo(w http.ResponseWriter, r *http.Request) (any, int) {
 	newTodo, err := httpcore.DecodeBody[models.NewTodo](w, r)
 	if err != nil {
-		return httpcore.ErrBadRequest.Msg(err), http.StatusBadRequest
+		return httpcore.ErrBadRequest.With(err), http.StatusBadRequest
 	}
 
 	todo := &models.Todo{
