@@ -1,4 +1,4 @@
-package api
+package handlers
 
 import (
 	"blaze/pkg/httpcore"
@@ -7,16 +7,6 @@ import (
 
 	"github.com/google/uuid"
 )
-
-type ApiController struct {
-	db []*models.Todo
-}
-
-func NewApiController() *ApiController {
-	return &ApiController{
-		db: make([]*models.Todo, 0),
-	}
-}
 
 func (tc *ApiController) GetTodos(w http.ResponseWriter, r *http.Request) (any, int) {
 	return tc.db, http.StatusOK

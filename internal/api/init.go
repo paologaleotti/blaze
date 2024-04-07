@@ -1,6 +1,7 @@
 package api
 
 import (
+	"blaze/internal/api/handlers"
 	"blaze/pkg/httpcore"
 	"blaze/pkg/util"
 	"net/http"
@@ -23,7 +24,7 @@ func InitService() http.Handler {
 
 	// env := api.InitEnv() // get typed environment
 
-	controller := NewApiController()
+	controller := handlers.NewApiController()
 	applyRoutes(router, controller)
 
 	return router
