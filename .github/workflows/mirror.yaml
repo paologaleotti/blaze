@@ -5,18 +5,11 @@ on: [push]
 jobs:
   mirror:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Source Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Mirror to Target Repository
-        env:
-          TARGET_REPO_PAT: ${{ secrets.TARGET_REPO_PAT }}
-          TARGET_REPO_URL: github.com/quinck-io/blaze
-        run: |
-          TARGET=https://$TARGET_REPO_PAT@$TARGET_REPO_URL
-          git remote add target $TARGET
-          git push --mirror $TARGET
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@github.com:quinck-io/blaze.git
+          ssh_private_key: ${{ secrets.GH_SSH_PRIVATE_KEY }}
