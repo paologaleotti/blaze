@@ -17,5 +17,5 @@ jobs:
           TARGET_REPO_PAT: ${{ secrets.TARGET_REPO_PAT }}
           TARGET_REPO_URL: https://github.com/quinck-io/blaze
         run: |
-          git remote add target $TARGET_REPO_URL
-          git push --mirror "https://$TARGET_REPO_PAT@$TARGET_REPO_URL"
+          git remote add target https://${TARGET_REPO_PAT}@${TARGET_REPO_URL}
+          git push --mirror https://${TARGET_REPO_PAT}@${TARGET_REPO_URL}
