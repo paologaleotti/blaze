@@ -1,0 +1,21 @@
+name: Mirror Repository to Another Repository
+
+on: [push]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mirror to Target Repository
+        env:
+          TARGET_REPO_PAT: ${{ secrets.TARGET_REPO_PAT }}
+          TARGET_REPO_URL: https://github.com/quinck-io/blaze
+        run: |
+          git remote add target "${TARGET_REPO_URL}"
+          git push --mirror "https://${TARGET_REPO_PAT}@${TARGET_REPO_URL#https://}"
