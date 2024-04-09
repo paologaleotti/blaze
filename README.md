@@ -23,6 +23,7 @@ You can find the full documentation with examples [here](https://github.com/paol
 - Custom HTTP error handling
 - Request payload validation
 - Structured logging with [zerolog](https://github.com/rs/zerolog)
+- Full AWS Lambda support (see [serverless](https://github.com/paologaleotti/blaze/tree/feature/serverless) branch)
 
 All described features are implemented in the `httpcore` and `util` package.
 
