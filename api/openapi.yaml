@@ -58,6 +58,67 @@ paths:
         "404":
           description: Not Found
 components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: NOT_FOUND
+            message: The specified resource was not found
+            status: 404
+    Unauthorized:
+      description: You are not authenticated
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: UNAUTHORIZED
+            message: You are not authenticated
+            status: 401
+    Forbidden:
+      description: You are forbidden to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: FORBIDDEN
+            message: You cannot access this resource
+            status: 403
+    BadRequest:
+      description: The request is invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: BAD_REQUEST
+            message: The provided data are not acceptable
+            status: 400
+    Conflict:
+      description: The provided data are in conflict with stored data
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: CONFLICT
+            message: Conflict with resources
+            status: 409
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            title: UNKOWN_INTERNAL
+            message: Internal Server Error
+            status: 500
   parameters:
     id:
       name: id
@@ -66,6 +127,35 @@ components:
       schema:
         type: integer
   schemas:
+    Error:
+      description: |
+        Error response object. The title is a machine readable error code.
+        The message is a human readable error message. It can contain one or
+        multiple messages to display more specific errors to the user.
+      type: object
+      required:
+        - title
+        - message
+        - status
+      properties:
+        title:
+          $ref: "#/components/schemas/ErrorCode"
+        message:
+          type: string
+        status:
+          type: integer
+    ErrorCode:
+      type: string
+      enum:
+        # base errors
+        - UNAUTHORIZED
+        - FORBIDDEN
+        - BAD_REQUEST
+        - NOT_FOUND
+        - UNKOWN_INTERNAL
+        - CONFLICT
+        - IM_A_TEAPOT
+        # application specific errors
     NewTodo:
       type: object
       required:

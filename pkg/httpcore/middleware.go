@@ -4,20 +4,22 @@ import (
 	"net/http"
 	"time"
 
-	"go.uber.org/zap"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/rs/zerolog/log"
 )
 
-func LoggerMiddleware(log *zap.Logger) func(http.Handler) http.Handler {
-	return func(next http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			startTime := time.Now()
-			next.ServeHTTP(w, r)
+func LoggerMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		startTime := time.Now()
 
-			log.Info("Request completed",
-				zap.String("method", r.Method),
-				zap.String("url", r.URL.String()),
-				zap.Duration("duration", time.Since(startTime)),
-			)
-		})
-	}
+		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
+		next.ServeHTTP(ww, r)
+
+		log.Info().
+			Stringer("url", r.URL).
+			Str("method", r.Method).
+			Int("status", ww.Status()).
+			Dur("duration", time.Since(startTime)).
+			Msg("Request completed")
+	})
 }

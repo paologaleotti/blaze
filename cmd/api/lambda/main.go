@@ -2,15 +2,15 @@ package main
 
 import (
 	"blaze/internal/api"
-	"blaze/pkg/util"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
 	router := api.InitService()
 
-	util.Log.Info("Server started at http://localhost:3000")
+	log.Info().Msg("Server started on AWS Lambda")
 	lambda.Start(httpadapter.New(router).ProxyWithContext)
 }

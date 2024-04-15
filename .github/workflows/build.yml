@@ -1,0 +1,38 @@
+name: Build and lint
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go environment
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+          skip-pkg-cache: true
+
+      - name: Build the application
+        run: make build
+
+      - name: Send Telegram notification
+        uses: appleboy/telegram-action@master
+        if: github.event_name == 'push'
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            [blaze🔥] Build ${{ job.status }}! 
+            Commit: ${{ github.event.commits[0].message }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}

@@ -3,16 +3,33 @@ package httpcore
 import "net/http"
 
 type ApiError struct {
-	Title   string `json:"title"`
+	// Title is a short, machine-readable string that describes the error.
+	Title string `json:"title"`
+	// Message is a human-readable string that describes the error.
 	Message string `json:"message"`
-	Status  int    `json:"status"`
+	// Status is the HTTP status code that should be returned with the error.
+	Status int `json:"status"`
 }
 
-func (e ApiError) Msg(err error) ApiError {
-	if err != nil {
-		e.Message += ": " + err.Error()
+// Msg returns a new ApiError with the given string appended to the message.
+func (e ApiError) Msg(msg string) ApiError {
+	return ApiError{
+		Title:   e.Title,
+		Message: e.Message + ": " + msg,
+		Status:  e.Status,
 	}
-	return e
+}
+
+// With returns a new ApiError with the given error appended to the message.
+func (e ApiError) With(err error) ApiError {
+	if err == nil {
+		return e
+	}
+	return ApiError{
+		Title:   e.Title,
+		Message: e.Message + ": " + err.Error(),
+		Status:  e.Status,
+	}
 }
 
 var (
