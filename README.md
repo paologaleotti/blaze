@@ -29,3 +29,15 @@ All utilities are implemented in the `httpcore` and `util` package.
 - **chi/middleware**: middleware and hooks
 - **validator/v10**: request body struct validation
 - **zerolog**: Structured logging
+
+## Get started
+
+You can start by reading the small [wiki](https://github.com/paologaleotti/blaze/wiki) with examples.
+
+To scaffold a new blaze project, simply run this command:
+
+```bash
+go run github.com/paologaleotti/blaze-cli@master
+```
+
+This will use the [blaze-cli](https://github.com/paologaleotti/blaze-cli) to scaffold the project. You can also use the GitHub template or simply clone the repo.

@@ -17,7 +17,7 @@ func InitService() http.Handler {
 
 	router := chi.NewRouter()
 
-	router.Use(cors.AllowAll().Handler)
+	router.Use(cors.New(httpcore.DefaultCorsOptions).Handler)
 	router.Use(middleware.Timeout(20 * time.Second))
 	router.Use(middleware.Recoverer)
 	router.Use(httpcore.LoggerMiddleware)
