@@ -9,6 +9,8 @@ Simple and minimal Go template for building fast, simple and mantainable web ser
 
 You can find the **full documentation** with examples [here](https://github.com/paologaleotti/blaze/wiki).
 
+A full REST API example using SQLite, sqlx and Prometheus metrics can be found [here](https://github.com/paologaleotti/blaze-api-example).
+
 ## Features
 
 - Minimal and low overhead
