@@ -22,7 +22,7 @@ func InitService() http.Handler {
 	router.Use(middleware.Recoverer)
 	router.Use(httpcore.LoggerMiddleware)
 
-	// env := api.InitEnv() // get typed environment
+	// env := InitEnv() // get typed environment
 
 	controller := handlers.NewApiController()
 	applyRoutes(router, controller)
