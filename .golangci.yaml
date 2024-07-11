@@ -30,6 +30,7 @@ linters:
     - unconvert
     - usestdlibvars
     - revive
+    - musttag
 linters-settings:
   exhaustive:
     default-signifies-exhaustive: true
