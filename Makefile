@@ -6,8 +6,6 @@ ORANGE := \033[0;33m
 NC := \033[0m  # No Color
 LABEL := ${ORANGE}[blaze]${NC}
 
-# Build all entrypoints and place artifacts in /bin
-
 build: startlog tidy lint-if-env
 	@mkdir -p bin
 	@for dir in $(CMD_DIRS); do \
@@ -16,15 +14,9 @@ build: startlog tidy lint-if-env
 	done
 	@echo "${LABEL} Done!"
 
-
-# Clean build artifacts
 clean:
 	rm -rf bin
-
-generate:
-	@echo "${LABEL} Generating types from OpenAPI schema..."
-	@go run github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest -generate types -package models $(OPENAPI_DIR)
-		
+	
 startlog:
 	@echo "${LABEL} Build started"
 
@@ -43,4 +35,4 @@ lint-if-env:
 		golangci-lint run; \
 	fi
 
-.PHONY: build clean generate
+.PHONY: build clean
