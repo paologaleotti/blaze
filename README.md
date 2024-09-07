@@ -16,7 +16,7 @@ A full REST API example using SQLite, sqlx and Prometheus metrics can be found [
 - Minimal and low overhead
 - Production ready
 - Simple and conventional structure
-- Fully compatible and base on standard [net/http](https://pkg.go.dev/net/http)
+- Fully compatible and based on standard [net/http](https://pkg.go.dev/net/http)
 - Strict linting with [golangci-lint](https://golangci-lint.run/)
 - Custom HTTP error handling
 - Request payload validation
