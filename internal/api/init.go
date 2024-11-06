@@ -1,8 +1,10 @@
 package api
 
 import (
-	"blaze/internal/api/handlers"
+	"blaze/internal/api/routers"
+	"blaze/internal/api/services"
 	"blaze/pkg/httpcore"
+	"blaze/pkg/models"
 	"blaze/pkg/util"
 	"net/http"
 	"time"
@@ -24,8 +26,11 @@ func InitService() http.Handler {
 
 	// env := InitEnv() // get typed environment
 
-	controller := handlers.NewApiController()
-	applyRoutes(router, controller)
+	db := make([]models.Todo, 0)
+
+	todoService := services.NewTodoService(&db)
+
+	routers.ApplyTodoRoutes(router, todoService)
 
 	return router
 }
