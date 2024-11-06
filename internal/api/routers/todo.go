@@ -30,7 +30,7 @@ func ApplyTodoRoutes(router chi.Router, todoService *services.TodoService) {
 	})
 
 	router.Post("/todos", func(w http.ResponseWriter, r *http.Request) {
-		newTodo, err := httpcore.DecodeBody[models.NewTodo](w, r)
+		newTodo, err := httpcore.DecodeBody[models.NewTodo](r)
 		if err != nil {
 			render.Status(r, http.StatusBadRequest)
 			render.JSON(w, r, render.M{"error": err.Error()})
