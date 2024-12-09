@@ -4,9 +4,6 @@
 
 Simple and minimal Go template for building fast, simple and mantainable web services and backend applications.
 
-> [!IMPORTANT]
-> While blaze is already used and working flawlessly in production, it's still evolving and may have breaking changes in the future.
-
 You can find the **full documentation** with examples [here](https://github.com/paologaleotti/blaze/wiki).
 
 A full REST API example using SQLite, sqlx and Prometheus metrics can be found [here](https://github.com/paologaleotti/blaze-api-example).
@@ -29,7 +26,7 @@ All utilities are implemented in the `httpx` and `util` package.
 ## Stack
 
 - **chi**: HTTP router (std net/http compatible)
-- **chi/middleware**: middleware and hooks
+- **chi/middleware**: default middlewares and utils
 - **validator/v10**: request body struct validation
 - **zerolog**: Structured logging
 
