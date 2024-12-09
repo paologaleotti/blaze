@@ -11,6 +11,7 @@ import (
 )
 
 var ErrInvalidQuery = errors.New("invalid query parameter type")
+var ErrInvalidBody = errors.New("invalid request body")
 
 var validate = validator.New(validator.WithRequiredStructEnabled())
 
@@ -21,10 +22,10 @@ func DecodeBody[T any](r *http.Request) (T, error) {
 	errDecode := render.DecodeJSON(r.Body, &payload)
 	errValidate := validate.Struct(payload)
 	err := errors.Join(errDecode, errValidate)
-
 	if err != nil {
-		return payload, err
+		return payload, errors.Join(ErrInvalidBody, err)
 	}
+
 	return payload, nil
 }
 

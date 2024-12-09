@@ -1,10 +1,12 @@
 package httpcore
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/render"
 	"github.com/rs/zerolog/log"
 )
 
@@ -22,4 +24,9 @@ func LoggerMiddleware(next http.Handler) http.Handler {
 			Dur("duration", time.Since(startTime)).
 			Msg("Request completed")
 	})
+}
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	render.Status(r, http.StatusNotFound)
+	render.JSON(w, r, ErrNotFound.With(errors.New("Route not mounted")))
 }

@@ -10,7 +10,9 @@ import (
 	"github.com/go-chi/render"
 )
 
-func ApplyTodoRoutes(router chi.Router, todoService *services.TodoService) {
+// TODO pass context
+
+func ApplyTodoRoutes(router chi.Router, errMap httpcore.ApiErrorMap, todoService *services.TodoService) {
 	router.Get("/todos", func(w http.ResponseWriter, r *http.Request) {
 		todos := todoService.GetTodos()
 		render.JSON(w, r, todos)
@@ -20,10 +22,8 @@ func ApplyTodoRoutes(router chi.Router, todoService *services.TodoService) {
 		id := chi.URLParam(r, "id")
 		todo, err := todoService.GetTodoById(id)
 
-		// TODO HANDLE ERRORS
 		if err != nil {
-			render.Status(r, http.StatusNotFound)
-			render.JSON(w, r, render.M{"error": err.Error()})
+			httpcore.RenderError(w, r, errMap, err)
 			return
 		}
 		render.JSON(w, r, todo)
@@ -32,10 +32,8 @@ func ApplyTodoRoutes(router chi.Router, todoService *services.TodoService) {
 	router.Post("/todos", func(w http.ResponseWriter, r *http.Request) {
 		newTodo, err := httpcore.DecodeBody[models.NewTodo](r)
 		if err != nil {
-			render.Status(r, http.StatusBadRequest)
-			render.JSON(w, r, render.M{"error": err.Error()})
+			httpcore.RenderError(w, r, errMap, err)
 			return
-			// TODO HANDLE ERRORS
 		}
 
 		todo := todoService.CreateTodo(newTodo)

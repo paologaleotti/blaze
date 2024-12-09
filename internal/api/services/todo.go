@@ -1,8 +1,8 @@
 package services
 
 import (
+	"blaze/internal/api/domain"
 	"blaze/pkg/models"
-	"errors"
 
 	"github.com/google/uuid"
 )
@@ -17,9 +17,6 @@ func NewTodoService(db *[]models.Todo) *TodoService {
 	}
 }
 
-// TODO where to put these mfs
-var ErrTodoNotFound = errors.New("todo not found")
-
 func (s *TodoService) GetTodos() []models.Todo {
 	return s.db
 }
@@ -31,7 +28,7 @@ func (s *TodoService) GetTodoById(id string) (models.Todo, error) {
 		}
 	}
 
-	return models.Todo{}, ErrTodoNotFound
+	return models.Todo{}, domain.ErrTodoNotFound
 }
 
 func (s *TodoService) CreateTodo(newTodo models.NewTodo) models.Todo {
