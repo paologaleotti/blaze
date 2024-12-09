@@ -4,7 +4,7 @@ import (
 	"blaze/internal/api/domain"
 	"blaze/internal/api/routers"
 	"blaze/internal/api/services"
-	"blaze/pkg/httpcore"
+	"blaze/pkg/httpx"
 	"blaze/pkg/models"
 	"blaze/pkg/util"
 	"net/http"
@@ -20,11 +20,11 @@ func InitService() http.Handler {
 
 	router := chi.NewRouter()
 
-	router.Use(cors.New(httpcore.DefaultCorsOptions).Handler)
+	router.Use(cors.New(httpx.DefaultCorsOptions).Handler)
 	router.Use(middleware.Timeout(20 * time.Second))
 	router.Use(middleware.Recoverer)
-	router.Use(httpcore.LoggerMiddleware)
-	router.NotFound(httpcore.NotFoundHandler)
+	router.Use(httpx.LoggerMiddleware)
+	router.NotFound(httpx.NotFoundHandler)
 
 	// env := InitEnv() // get typed environment
 
@@ -38,7 +38,7 @@ func InitService() http.Handler {
 	return router
 }
 
-var serviceErrorMap = map[error]httpcore.ApiError{
-	httpcore.ErrInvalidBody: httpcore.ErrBadRequest,
-	domain.ErrTodoNotFound:  httpcore.ErrNotFound,
+var serviceErrorMap = map[error]httpx.ApiError{
+	httpx.ErrInvalidBody:   httpx.ErrBadRequest,
+	domain.ErrTodoNotFound: httpx.ErrNotFound,
 }

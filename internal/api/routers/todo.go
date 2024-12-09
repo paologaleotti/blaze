@@ -2,7 +2,7 @@ package routers
 
 import (
 	"blaze/internal/api/services"
-	"blaze/pkg/httpcore"
+	"blaze/pkg/httpx"
 	"blaze/pkg/models"
 	"net/http"
 
@@ -12,7 +12,8 @@ import (
 
 // TODO pass context
 
-func ApplyTodoRoutes(router chi.Router, errMap httpcore.ApiErrorMap, todoService *services.TodoService) {
+func ApplyTodoRoutes(router chi.Router, errMap httpx.ApiErrorMap, todoService *services.TodoService) {
+
 	router.Get("/todos", func(w http.ResponseWriter, r *http.Request) {
 		todos := todoService.GetTodos()
 		render.JSON(w, r, todos)
@@ -23,16 +24,16 @@ func ApplyTodoRoutes(router chi.Router, errMap httpcore.ApiErrorMap, todoService
 		todo, err := todoService.GetTodoById(id)
 
 		if err != nil {
-			httpcore.RenderError(w, r, errMap, err)
+			httpx.RenderError(w, r, errMap, err)
 			return
 		}
 		render.JSON(w, r, todo)
 	})
 
 	router.Post("/todos", func(w http.ResponseWriter, r *http.Request) {
-		newTodo, err := httpcore.DecodeBody[models.NewTodo](r)
+		newTodo, err := httpx.DecodeBody[models.NewTodo](r)
 		if err != nil {
-			httpcore.RenderError(w, r, errMap, err)
+			httpx.RenderError(w, r, errMap, err)
 			return
 		}
 

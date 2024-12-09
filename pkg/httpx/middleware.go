@@ -1,4 +1,4 @@
-package httpcore
+package httpx
 
 import (
 	"errors"

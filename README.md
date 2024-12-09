@@ -13,17 +13,18 @@ A full REST API example using SQLite, sqlx and Prometheus metrics can be found [
 
 ## Features
 
-- Minimal and low overhead
+- Very minimal and zero overhead
 - Production ready
 - Simple and conventional structure
+- Separation of business logic and API logic
 - Fully compatible and based on standard [net/http](https://pkg.go.dev/net/http)
 - Strict linting with [golangci-lint](https://golangci-lint.run/)
-- Custom HTTP error handling
+- Custom HTTP error handling and error mapping (separate service errors from API errors)
 - Request payload validation
 - Structured logging with [zerolog](https://github.com/rs/zerolog)
 - Full AWS Lambda support (see [serverless](https://github.com/paologaleotti/blaze/tree/feature/serverless) branch)
 
-All utilities are implemented in the `httpcore` and `util` package.
+All utilities are implemented in the `httpx` and `util` package.
 
 ## Stack
 
