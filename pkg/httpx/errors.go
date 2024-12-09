@@ -31,10 +31,10 @@ func (e ApiError) With(err error) ApiError {
 // ApiErrorMap is a map of standard errors to their corresponding ApiError.
 type ApiErrorMap map[error]ApiError
 
-// RenderError renders an error response to the client according to the given error mapping.
+// RenderError renders the error wrapped in a ApiError to the client, according to the given error mapping.
 // If the error is not found in the map, a generic 500 Internal Server Error is returned.
 //
-// In a handler, remember to return after calling this function to prevent further processing.
+// In a handler, remember to return right after calling this function to prevent further processing.
 func RenderError(w http.ResponseWriter, r *http.Request, errMap ApiErrorMap, err error) {
 	apiErr := ApiError{}
 	for k, v := range errMap {
