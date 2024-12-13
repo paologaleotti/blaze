@@ -3,41 +3,50 @@ package services
 import (
 	"blaze/internal/api/domain"
 	"blaze/pkg/models"
+	"blaze/pkg/storage"
+	"context"
+	"errors"
 
 	"github.com/google/uuid"
 )
 
 type TodoService struct {
-	db []models.Todo
+	todoDb *storage.TodoStorage
 }
 
-func NewTodoService(db *[]models.Todo) *TodoService {
+func NewTodoService(todoDb *storage.TodoStorage) *TodoService {
 	return &TodoService{
-		db: *db,
+		todoDb: todoDb,
 	}
 }
 
-func (s *TodoService) GetTodos() []models.Todo {
-	return s.db
+func (s *TodoService) GetTodos(ctx context.Context) ([]models.Todo, error) {
+	return s.todoDb.GetTodos(ctx)
 }
 
-func (s *TodoService) GetTodoById(id string) (models.Todo, error) {
-	for _, todo := range s.db {
-		if todo.Id == id {
-			return todo, nil
+func (s *TodoService) GetTodoById(ctx context.Context, id string) (models.Todo, error) {
+	todo, err := s.todoDb.GetTodoById(ctx, id)
+	if err != nil {
+		if errors.Is(err, storage.ErrTodoNotFound) {
+			return models.Todo{}, domain.ErrTodoNotFound
 		}
+		return models.Todo{}, err
 	}
 
-	return models.Todo{}, domain.ErrTodoNotFound
+	return todo, nil
 }
 
-func (s *TodoService) CreateTodo(newTodo models.NewTodo) models.Todo {
+func (s *TodoService) CreateTodo(ctx context.Context, newTodo models.NewTodo) (models.Todo, error) {
 	todo := models.Todo{
 		Id:        uuid.New().String(),
 		Title:     newTodo.Title,
 		Completed: false,
 	}
 
-	s.db = append(s.db, todo)
-	return todo
+	err := s.todoDb.CreateTodo(ctx, todo)
+	if err != nil {
+		return models.Todo{}, err
+	}
+
+	return todo, nil
 }

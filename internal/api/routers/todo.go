@@ -12,32 +12,47 @@ import (
 
 // TODO pass context
 
-func ApplyTodoRoutes(router chi.Router, errMap httpx.ApiErrorMap, todoService *services.TodoService) {
+func MountTodoRoutes(router chi.Router, errMap httpx.ApiErrorMap, todoService *services.TodoService) {
 
 	router.Get("/todos", func(w http.ResponseWriter, r *http.Request) {
-		todos := todoService.GetTodos()
-		render.JSON(w, r, todos)
-	})
+		ctx := r.Context()
 
-	router.Get("/todos/{id}", func(w http.ResponseWriter, r *http.Request) {
-		id := chi.URLParam(r, "id")
-		todo, err := todoService.GetTodoById(id)
-
+		todos, err := todoService.GetTodos(ctx)
 		if err != nil {
 			httpx.RenderError(w, r, errMap, err)
 			return
 		}
+
+		render.JSON(w, r, todos)
+	})
+
+	router.Get("/todos/{id}", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		id := chi.URLParam(r, "id")
+
+		todo, err := todoService.GetTodoById(ctx, id)
+		if err != nil {
+			httpx.RenderError(w, r, errMap, err)
+			return
+		}
+
 		render.JSON(w, r, todo)
 	})
 
 	router.Post("/todos", func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		newTodo, err := httpx.DecodeBody[models.NewTodo](r)
 		if err != nil {
 			httpx.RenderError(w, r, errMap, err)
 			return
 		}
 
-		todo := todoService.CreateTodo(newTodo)
+		todo, err := todoService.CreateTodo(ctx, newTodo)
+		if err != nil {
+			httpx.RenderError(w, r, errMap, err)
+			return
+		}
+
 		render.JSON(w, r, todo)
 	})
 }

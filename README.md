@@ -2,17 +2,15 @@
 
 ![logo](https://github.com/paologaleotti/blaze/assets/45665769/a0c691df-b76b-4a4a-ac44-c622dd458352)
 
-Simple and minimal Go template for building fast, simple and mantainable web services and backend applications.
+Minimal Go template for building fast, simple and mantainable web services and backend applications.
 
 You can find the **full documentation** with examples [here](https://github.com/paologaleotti/blaze/wiki).
-
-A full REST API example using SQLite, sqlx and Prometheus metrics can be found [here](https://github.com/paologaleotti/blaze-api-example).
 
 ## Features
 
 - Very minimal and zero overhead
 - Production ready
-- Simple and conventional structure
+- Simple and conventional structure, no black magic
 - Separation of business logic and API logic
 - Fully compatible and based on standard [net/http](https://pkg.go.dev/net/http)
 - Strict linting with [golangci-lint](https://golangci-lint.run/)
@@ -23,21 +21,35 @@ A full REST API example using SQLite, sqlx and Prometheus metrics can be found [
 
 All utilities are implemented in the `httpx` and `util` package.
 
-## Stack
+This repo contains a more real world example of a CRUD API with:
+
+- sqlite3 storage
+- Embedded sql migrations
+- Apply migrations on startup with goose
+
+## Base dependencies
 
 - **chi**: HTTP router (std net/http compatible)
 - **chi/middleware**: default middlewares and utils
 - **validator/v10**: request body struct validation
-- **zerolog**: Structured logging
+- **zerolog**: structured logging
 
 ## Get started
 
 You can start by reading the small [wiki](https://github.com/paologaleotti/blaze/wiki) with examples.
 
-To scaffold a new blaze project, simply run this command:
+To get started, simply run:
 
 ```bash
-go run github.com/paologaleotti/blaze-cli@master
+make
 ```
 
-This will use the [blaze-cli](https://github.com/paologaleotti/blaze-cli) to scaffold the project. You can also use the GitHub template or simply clone the repo.
+This will build the project, you just need Go installed and nothing else.
+
+To run the server:
+
+```bash
+./bin/api/main
+```
+
+This will create a sqlite3 file in the root of the project, run migrations and start the server on port 3000.

@@ -29,6 +29,8 @@ func DecodeBody[T any](r *http.Request) (T, error) {
 	return payload, nil
 }
 
+// TODO refactor
+
 // GetQueryStr retrieves a string query parameter from the request.
 func GetQueryStr(r *http.Request, param string) string {
 	return r.URL.Query().Get(param)
