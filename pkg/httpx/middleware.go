@@ -17,9 +17,8 @@ func LoggerMiddleware(next http.Handler) http.Handler {
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		next.ServeHTTP(ww, r)
 
-		// TODO level error for errors
 		log.Info().
-			Stringer("url", r.URL).
+			Stringer("path", r.URL).
 			Str("method", r.Method).
 			Int("status", ww.Status()).
 			Dur("duration", time.Since(startTime)).

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
 )
 
 type ApiError struct {
@@ -36,14 +37,17 @@ type ApiErrorMap map[error]ApiError
 //
 // In a handler, remember to return right after calling this function to prevent further processing.
 func RenderError(w http.ResponseWriter, r *http.Request, errMap ApiErrorMap, err error) {
-	apiErr := ApiError{}
+	apiErr := ErrUnkownInternal
+
 	for k, v := range errMap {
 		if errors.Is(err, k) {
 			apiErr = v
 			break
-		} else {
-			apiErr = ErrUnkownInternal
 		}
+	}
+
+	if apiErr == ErrUnkownInternal {
+		log.Error().Err(err).Msg("Unhandled error")
 	}
 
 	render.Status(r, apiErr.Status)
