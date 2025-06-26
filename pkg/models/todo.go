@@ -5,7 +5,7 @@ type NewTodo struct {
 }
 
 type Todo struct {
-	Completed bool   `json:"completed"`
-	Id        string `json:"id"`
-	Title     string `json:"title"`
+	Completed bool   `json:"completed" db:"completed"`
+	Id        string `json:"id" db:"id"`
+	Title     string `json:"title" db:"title"`
 }

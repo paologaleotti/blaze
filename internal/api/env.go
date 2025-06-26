@@ -4,18 +4,12 @@ import "blaze/pkg/util"
 
 type EnvConfig struct {
 	Environment string
+	DatabaseUrl string
 }
 
-var envVarMappings = util.EnvMapping{
-	"ENVIRONMENT": &env.Environment,
-}
-
-var env = &EnvConfig{}
-
-func InitEnv() *EnvConfig {
-	for key, goVar := range envVarMappings {
-		*goVar = util.GetEnvOrPanic(key)
+func InitEnv() EnvConfig {
+	return EnvConfig{
+		Environment: util.GetEnvOrDefault("ENVIRONMENT", "dev"),
+		DatabaseUrl: util.GetEnvOrDefault("DATABASE_URL", "db.sqlite3"),
 	}
-
-	return env
 }

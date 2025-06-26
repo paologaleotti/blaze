@@ -1,4 +1,4 @@
-package httpcore
+package httpx
 
 import (
 	"errors"
@@ -11,23 +11,25 @@ import (
 )
 
 var ErrInvalidQuery = errors.New("invalid query parameter type")
+var ErrInvalidBody = errors.New("invalid request body")
 
 var validate = validator.New(validator.WithRequiredStructEnabled())
 
 // DecodeBody decodes the request body into a given type T,
 // validates it, and returns the decoded payload and any error encountered during decoding.
-// It renders the JSON response to the given http.ResponseWriter and http.Request.
-func DecodeBody[T any](w http.ResponseWriter, r *http.Request) (T, error) {
+func DecodeBody[T any](r *http.Request) (T, error) {
 	var payload T
 	errDecode := render.DecodeJSON(r.Body, &payload)
 	errValidate := validate.Struct(payload)
 	err := errors.Join(errDecode, errValidate)
-
 	if err != nil {
-		return payload, err
+		return payload, errors.Join(ErrInvalidBody, err)
 	}
+
 	return payload, nil
 }
+
+// TODO refactor
 
 // GetQueryStr retrieves a string query parameter from the request.
 func GetQueryStr(r *http.Request, param string) string {

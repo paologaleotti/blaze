@@ -1,6 +1,12 @@
-package httpcore
+package httpx
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+
+	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
+)
 
 type ApiError struct {
 	// Title is a short, machine-readable string that describes the error.
@@ -9,15 +15,6 @@ type ApiError struct {
 	Message string `json:"message"`
 	// Status is the HTTP status code that should be returned with the error.
 	Status int `json:"status"`
-}
-
-// Msg returns a new ApiError with the given string appended to the message.
-func (e ApiError) Msg(msg string) ApiError {
-	return ApiError{
-		Title:   e.Title,
-		Message: e.Message + ": " + msg,
-		Status:  e.Status,
-	}
 }
 
 // With returns a new ApiError with the given error appended to the message.
@@ -32,45 +29,70 @@ func (e ApiError) With(err error) ApiError {
 	}
 }
 
+// ApiErrorMap is a map of standard errors to their corresponding ApiError.
+type ApiErrorMap map[error]ApiError
+
+// RenderError renders the error wrapped in a ApiError to the client, according to the given error mapping.
+// If the error is not found in the map, a generic 500 Internal Server Error is returned.
+//
+// In a handler, remember to return right after calling this function to prevent further processing.
+func RenderError(w http.ResponseWriter, r *http.Request, errMap ApiErrorMap, err error) {
+	apiErr := ErrUnkownInternal
+
+	for k, v := range errMap {
+		if errors.Is(err, k) {
+			apiErr = v
+			break
+		}
+	}
+
+	if apiErr == ErrUnkownInternal {
+		log.Error().Err(err).Msg("Unhandled error")
+	}
+
+	render.Status(r, apiErr.Status)
+	render.JSON(w, r, apiErr.With(err))
+}
+
 var (
 	ErrBadRequest = ApiError{
-		Title:   "BAD_REQUEST",
+		Title:   "BadRequest",
 		Message: "The request is invalid",
 		Status:  http.StatusBadRequest,
 	}
 
 	ErrUnauthorized = ApiError{
-		Title:   "UNAUTHORIZED",
+		Title:   "Unauthorized",
 		Message: "You are not authorized",
 		Status:  http.StatusUnauthorized,
 	}
 
 	ErrForbidden = ApiError{
-		Title:   "FORBIDDEN",
+		Title:   "Forbidden",
 		Message: "Access to this resource is forbidden",
 		Status:  http.StatusForbidden,
 	}
 
 	ErrConflict = ApiError{
-		Title:   "CONFLICT",
+		Title:   "Conflict",
 		Message: "Conflict with resources",
 		Status:  http.StatusConflict,
 	}
 
 	ErrNotFound = ApiError{
-		Title:   "NOT_FOUND",
+		Title:   "NotFound",
 		Message: "The requested resource was not found",
 		Status:  http.StatusNotFound,
 	}
 
 	ErrUnkownInternal = ApiError{
-		Title:   "UNKOWN_INTERNAL",
+		Title:   "UnknownInternal",
 		Message: "An internal server error occurred",
 		Status:  http.StatusInternalServerError,
 	}
 
 	ErrImATeapot = ApiError{
-		Title:   "IM_A_TEAPOT",
+		Title:   "ImATeapot",
 		Message: "I'm a teapot",
 		Status:  http.StatusTeapot,
 	}
