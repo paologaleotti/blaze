@@ -4,8 +4,6 @@
 
 Minimal Go template for building fast, simple and mantainable web services and backend applications.
 
-You can find the **full documentation** with examples [here](https://github.com/paologaleotti/blaze/wiki).
-
 ## Features
 
 - Very minimal and zero overhead
