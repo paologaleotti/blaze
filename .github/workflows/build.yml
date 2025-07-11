@@ -24,15 +24,3 @@ jobs:
 
       - name: Build the application
         run: make build
-
-      - name: Send Telegram notification
-        uses: appleboy/telegram-action@master
-        if: github.event_name == 'push'
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            [blaze🔥] Build ${{ job.status }}! 
-            Commit: ${{ github.event.commits[0].message }}
-
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
